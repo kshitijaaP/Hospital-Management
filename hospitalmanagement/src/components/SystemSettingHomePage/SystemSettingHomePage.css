@@ -1,0 +1,49 @@
+/* .Navbar{
+    width: 100%;
+    background-color: black;
+    color: white;
+    height: 51px;    
+} */
+/* .headerManagement{
+    background-color: black;
+    margin-top: 0px;
+    text-align: left;
+} */
+.LogOut{
+    color: aqua;
+}
+/* .row > div {
+   color: black;
+   border: 2px solid gray;
+  } */
+  .SystemSettingContainer{
+    margin-top: 20px;
+  }
+  .SystemSettingName{
+    margin-left: -32px;
+    margin-top: -23px;
+    font-size: 26px;
+  }
+
+  .paraDiseaseScore{
+    margin-left: -362px;
+    margin-top: 13px;
+    font-size: 16px;
+  }
+  .paraDiseaseName{
+    margin-left: -249px;
+    margin-top: 13px;
+    font-size: 16px;
+    margin-left: -362px;
+  }
+  .inputDisease{
+    margin-top: 20px;
+  }
+  .inputScore{
+    margin-top: 20px ;
+  }
+
+  /* th, td {
+    padding: 15px;
+    text-align: left;
+  } */

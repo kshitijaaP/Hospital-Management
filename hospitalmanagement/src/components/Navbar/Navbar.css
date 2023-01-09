@@ -1,0 +1,21 @@
+.sideNavbars{
+    background-color: lightgrey;
+    margin-top: -8px;
+    height: 900px;
+    color: white;
+    overflow: auto;
+    margin-left: -15px;
+}
+li{
+ 
+    list-style-type: none;
+    color: white;
+    border-bottom: 1px  solid;
+    margin-left:-24px
+}
+.styleNavLink{
+   
+    color: blue;
+    font-size: 22px;
+    text-decoration: none;
+}

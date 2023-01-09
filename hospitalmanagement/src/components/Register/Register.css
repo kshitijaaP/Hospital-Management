@@ -1,0 +1,126 @@
+.header{
+    color: black;
+    font-family: Andale Mono, monospace;
+    text-align: center;
+    font-size: 50px;
+    border: 1px solid rgb(171, 169, 169);
+    margin-top: 0px;
+    padding: 12px
+}
+.body{
+    text-align: center;
+}
+
+.registerAddHeader{
+
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    padding: 18px;
+    font-size: 31px;
+    margin-left: 861px;
+}
+.registerformHeader{
+
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    padding: 18px;
+    margin-left: 900px;
+    font-size: 70px;
+}
+.registerForm{
+    
+font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+
+margin-right: 800px;
+
+}
+.registerAddEmail,.registerAddFName,.registerAddLName,.registerAddPassword,.registerAddConfirmPassword{
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    margin-left: 450px;
+    font-size: 21px;
+    margin-top: 26px;
+
+}
+.registerInputName,.registerInputEmail,.registerInputDepartment{
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    width: 102%;
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #dfdfe0;
+    margin-left: 271px;
+    color: grey;
+    margin-top: 1px;
+    height: 52px;
+    margin-left: 449px;
+ 
+}
+.registerButton{
+    background-color: rgb(45, 217, 226);
+    color: white;
+    width: 14%;
+    height: 43px;
+    border-radius: 5px;
+    margin-left: 448px;
+    margin-top: 20px;
+    font-size: 22px;
+    border: none;
+    
+}
+input::placeholder{
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 25px;
+
+}
+.registerdata{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 918px;
+    margin-left: 450px;
+    margin-top: 20px;
+ 
+
+}
+.registerimage{
+    width: 103%;
+    margin-top: 5%;
+    margin-left: -5px;
+   
+}
+
+.horizontalline{
+    border-top: 1px solid black;
+    width: 1255px;
+}
+  .registerrow{
+    width: 5%;
+  }
+  .nameregister{
+    font-family:  "Gill Sans Extrabold", sans-serif;
+    text-align: left;
+    font-size: 20px;
+    margin-right: 900px;
+    margin-top: 23px;
+  }
+  .emailregister{
+    font-family:  "Gill Sans Extrabold", sans-serif;
+    text-align: left;
+    font-size: 20px;
+    margin-top: -1%;
+    margin-right: 694px;
+  }
+  .rowline{
+    border-bottom: 2px solid grey;
+
+  }
+  .registerHeader{
+    text-align: center;
+    font-size: 55px;
+  }
+.addline{
+width: 80%;
+width: 61%;
+    margin-left: 449px;
+  }
+  /* .navBar{
+    background-color: lightgray;
+    height: 53px;
+  } */

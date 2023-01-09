@@ -1,0 +1,25 @@
+.deleteDiseaseButton{
+  background-color: red;
+  color: white;
+  margin-left: 368px;
+  margin-top: 7px;
+  border: none;
+  border-radius: 5px
+  }
+  .paraAddRoom{
+    margin-top: 76px;
+    font-size: 23px;
+  }
+  .paraRoomName{
+    margin-left: -377px;
+    font-weight: bold;
+
+  }
+  .paraDeleteRoom{
+    font-size: 23px;
+    margin-left: -363px;
+  }
+  .buttonAddRoom{
+    background-color: green;
+  }
+ 

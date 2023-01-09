@@ -1,0 +1,36 @@
+.HeaderHospMgmt{
+    background-color: black;
+    color: white;
+    height: 48px;
+}
+li{
+ 
+    list-style-type: none;
+   
+    /* display: inline; */
+  
+
+ 
+}
+ul{
+    text-decoration: none;
+}
+
+.styleNavLinkHeaderRegister{
+    color: white;
+    margin-left: 1602px;
+    font-size: 25px;
+    text-decoration: none;
+}
+.styleNavLinkHeaderLogin{
+    font-size: 25px;
+    color: white;
+    margin-left: 65px;
+    text-decoration: none;
+}
+.styleNavLinkHeaderLogout{
+    color: white;
+    margin-left: 1814px;
+    font-size: 25px;
+    text-decoration: none;
+}
