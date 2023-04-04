@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
+import { useLocation } from "react-router-dom"
 import App from "../../App"
 import HospitalManagementHeader from "../HospitalManagementHeader/HospitalManagementHeader"
 import "./Login.css"
@@ -13,7 +13,12 @@ export default function Login() {
   const [authenticateUser, setAuthenticateUser] = useState(false)
   let authenticateKar = false;
   const win=window.sessionStorage
- 
+  const { state } = useLocation();
+  let registerLoginMessage;
+  if (state!==null){
+    registerLoginMessage=state.messageLogin
+  }
+   
   const navigate = useNavigate()
 
   const handleLoginInput = (e) => {
@@ -43,7 +48,7 @@ export default function Login() {
         navigate("/login")
       }
       if (res.data.message == "Please register first") {
-        navigate("/register", alert("res.data.message"))
+        navigate("/register", alert(res.data.message ))
       }
 
     })
@@ -58,7 +63,11 @@ export default function Login() {
           <HospitalManagementHeader showNavbar={true} >   </HospitalManagementHeader>
         </div>
         <h1 className="loginHeader">Login</h1>
-        {IncorrectPassword && <h2>{IncorrectPasswordMsg}</h2>}
+        {registerLoginMessage && 
+        <h2  style={{marginLeft:'447px',fontSize:'22px',marginTop:'20px',padding:'7px',color:'blue',border:'3px solid green',width:'27%',}}>Successfuly registered..Please Login to continue</h2> 
+        // <h2>{registerLoginMessage}</h2>
+      }
+        
         <div className="loginForm" >
           {/* <h1 className="loginAddHeader"> Add Contact</h1> */}
           <form onSubmit={loginSubmit}>
@@ -69,6 +78,7 @@ export default function Login() {
             <h4 className="loginAddName">  Password: </h4>
             <input onChange={handleLoginInput} name="password" id='name' className="loginInputName" type="password" placeholder="Enter your name" required></input>
             <br></br>
+            {IncorrectPassword && <h2 style={{marginLeft:'447px',fontSize:'18px',marginTop:'20px',padding:'7px',color:'red', border:'3px solid red'}}>{IncorrectPasswordMsg}</h2>}
             <button className="loginButton">Add</button>
           </form>
         </div>

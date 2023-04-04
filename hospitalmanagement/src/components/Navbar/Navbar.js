@@ -29,6 +29,7 @@ export default function Navbar() {
                     <img style={{width:'17%'}} src={SettingIcon}></img>
                         <NavLink  className="styleNavLink" to={"/systemsetting"}>System Setting</NavLink>
                     </li>
+                   
                 </ul>
             </div>
         </div>

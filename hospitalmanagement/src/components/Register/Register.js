@@ -23,7 +23,7 @@ export default function Register()
   //  {
     axios.post("http://localhost:5000/register",registerUser).then((res)=>
     {
-      navigate("/login")
+      navigate("/login", {state:{messageLogin:'Welcome..!! Please login to continue...'}})
     })
    //}
 

@@ -6,6 +6,7 @@ const PatientSchema=require('./models/PatientModel')
 const PatientRoomSchema=require('./models/PatientRoomModel')
 const RegisterSchema=require("./models/RegisterModel")
 const loginSchema=require("./models/LoginModel")
+const DischargePatientSchema=require("./models/DischargePatientModel")
 const app=express();
 app.use(express.json())
 const cors = require("cors");
@@ -27,7 +28,6 @@ app.post('/SystemSettingDisease',(req,res)=>
           res.send({data})
         }
     })
-    console.log("Body : "  +diseaseName + '  ' +diseaseScore)
 })
 app.get('/SystemSettingDisease',(req,res)=>
 {
@@ -124,7 +124,7 @@ app.get("/getPatientRoom",async (req,res)=>{
                console.log(err)
             }
             else{
-              console.log("data aahe")
+            
               // res.send({data});
               res.json(data)
             }
@@ -133,7 +133,7 @@ app.get("/getPatientRoom",async (req,res)=>{
         })
 })
 app.post("/addPatientRoom",(req,res)=>{
-    console.log(req.body)
+
     
     
     // let patientName=req.body[0].patientName
@@ -142,11 +142,10 @@ app.post("/addPatientRoom",(req,res)=>{
     // let patientId=req.body[0].patientId
 
     req.body.forEach(patientRoomRequest=>{
-      const{ patientName,roomNumber,roomId,patientId}=patientRoomRequest
-      console.log("Data in patientRoom")
-      console.log(patientName + ' space ' + roomNumber  + ' space ' + roomId  + ' space ' + patientId)
+      
+      const{ patientName,roomNumber,roomId,patientId,patientDiseaseScore,patientDisease}=patientRoomRequest
       const patientroom=new PatientRoomSchema({
-        patientName,roomNumber,roomId,patientId
+        patientName,roomNumber,roomId,patientId,patientDiseaseScore,patientDisease
     })
     patientroom.save((err,data)=>{
         if(err) throw err;
@@ -242,5 +241,79 @@ app.post("/deleteDisease",(req,res)=>{
     });
  
 })
+app.post("/dischargepatient",(req,res)=>{
+ 
+    
+  req.body.forEach( element => {
+  
+      let _id=element._id
+      PatientRoomSchema.findOne({_id:_id},(err,patientRoomData)=>{
+        console.log(patientRoomData)
+      const roomName=patientRoomData.roomNumber
+        const saveRoom=new roomSchema({roomName})
+        saveRoom.save((err,data)=>{
+          if (err) throw err
+        else{
+          // res.send({data})
+        }        
+      })
+      console.log(patientRoomData)
+      const discharged_patientName=patientRoomData.patientName
+      const discharged_roomNumber=patientRoomData.roomNumber
+      const discharged_roomId=patientRoomData.roomId
+      const discharged_patientId=patientRoomData.patientId
+      const discharged_patientDiseaseScore=patientRoomData.patientDiseaseScore
+      const discharged_patientDisease=patientRoomData.patientDisease
+      // const{ discharged_patientName,discharged_roomNumber,discharged_roomId,discharged_patientId,discharged_patientDiseaseScore,discharged_patientDisease}=patientRoomData
+        const dischargePatientSave= new DischargePatientSchema(
+          {
+            discharged_patientName,discharged_roomNumber,discharged_roomId,discharged_patientId,discharged_patientDiseaseScore,discharged_patientDisease
+          }
+        )
+        dischargePatientSave.save((err,data)=>{
+        if (err) throw err
+        else{
+          // res.send({data})
+          console.log(data)
+        }
 
+        })
+        const patiendName=patientRoomData.patiendName;
+
+      })
+
+     PatientRoomSchema.findOneAndDelete({_id:_id}).then(
+          () => {
+              
+              res.status(200).json({
+                  message: 'Deleted!'
+                });
+          }
+        ).catch(
+          
+          (error) => {
+             
+              res.status(400).json({
+                  error: error
+                });
+           
+          }
+          
+          
+        );
+        
+    });
+ 
+})
+app.get("/dischargepatietdata",(req,res)=>{
+  DischargePatientSchema.find((err,data)=>{
+    if (err) throw err
+    else
+    {
+    
+      res.send(data)
+    }
+   
+  })
+})
 app.listen(5000)

@@ -32,6 +32,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/systemsetting" element={<SystemSettingHomePage />}></Route>
           <Route path="/addpatient" element={<AddPatient />}></Route>
+        
 
         </Routes>
       </Router>

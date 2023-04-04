@@ -3,6 +3,9 @@ import HospitalManagementHeader from "../HospitalManagementHeader/HospitalManage
 import React from "react"
 import axios from 'axios'
 import { useState } from "react"
+import { Button } from "bootstrap"
+import { CSVLink } from "react-csv";
+import { useRef } from 'react';
 export default function Dashboard(){
   const [resPatient, setResPatient] = useState([])
   const [patientList, setpatientList] = useState(false)
@@ -12,22 +15,54 @@ export default function Dashboard(){
   const [roomList, setroomList] = useState(false)
   const [start, setStart] = useState('new')
   const [patientRoomDetailData,setPatientRoomDetailData]=useState([])
-
+  const[deleteDataObj,setDeleteDataObj]=useState([])
   const [roomAvailability,setRoomAvailability]=useState(false)
+  const [data, setData] = useState([]);
+  
+    const [downloadedData, setDownloadedData] = useState([]);
+    const csvDownloadRef = useRef(0);
   const win=window.sessionStorage
   React.useEffect(()=>{
-    // const timer = setTimeout(() => {
-    //   getPatientData()
-    //   getRoomData()
-    //   getPatientRoomData()
-  
-    // });
-    // return () => clearTimeout(timer);
  getPatientData()
     getRoomData()
     getPatientRoomData()
     
   },[start])
+  const headers = [
+    { label: "Patient Id", key: "_id" },
+        { label: "Patient Name", key: "discharged_patientName" },
+        { label: "Room Number", key: "discharged_roomNumber" },
+        { label: "Disease", key: "discharged_patientDisease" },
+        { label: "Severity", key: "discharged_patientDiseaseScore" },
+       
+  ];
+  const fetchDataToDownload = () => {
+    axios
+      .get("http://localhost:5000/dischargepatietdata")
+      .then(({data }) => {
+        setDownloadedData(data);
+        console.log(downloadedData)
+        setTimeout(() => {
+          csvDownloadRef.current.link.click();
+        }, 500);
+      })
+      .catch((error) => 
+      console.log(error)
+      );
+  };
+  const dischargeButton=(e)=>{
+    e.preventDefault()
+    
+    axios.post("http://localhost:5000/dischargepatient",deleteDataObj).then(res=>{
+        console.log(res);
+        if(res.data.message=== 'Deleted!')
+        {
+          getPatientRoomData()
+         getRoomData()
+        }
+       })
+}
+
   const getPatientData=async()=>{
   await axios.get("http://localhost:5000/addpatient").then(res=>{
     if (res.data.data.length>0)
@@ -66,12 +101,15 @@ await axios.get('http://localhost:5000/getPatientRoom').then(res => {
     console.log("aat aala")
   
     let patientName=patient.fname+ patient.lname
+    let patientDisease=patient.diseaseName
+    let patientDiseaseScore=patient.diseaseScore
+
     let patientId=patient._id
     if( res.data.length>0)
     {
       let roomNumber=res.data[0].roomName 
       let roomId=res.data[0]._id
-      patientRoomDetailData.push({patientName:patientName,roomNumber:roomNumber,roomId:roomId,patientId:patientId})
+      patientRoomDetailData.push({patientName:patientName,roomNumber:roomNumber,roomId:roomId,patientId:patientId,patientDiseaseScore:patientDiseaseScore,patientDisease:patientDisease})
     }
     else{
       setRoomAvailability(true)
@@ -120,6 +158,13 @@ const getPatientRoomData=async()=>{
     setPatientRoomList(true)
   })
 }
+const handlePatientDischarge=(e)=>{
+  let tempDeleteArray=deleteDataObj
+     
+        tempDeleteArray.push({_id:e._id})
+        setDeleteDataObj(tempDeleteArray)
+        console.log(deleteDataObj)
+}
     return(
     <div>
        <HospitalManagementHeader showNavbar={false} >   </HospitalManagementHeader>
@@ -129,7 +174,24 @@ const getPatientRoomData=async()=>{
          <div className="row "  >
           <div className="col col-lg-2">
             <Navbar/>
+            <CSVLink
+          headers={headers}
+          data={downloadedData}
+          filename="parents.csv"
+          className="hidden"
+          ref={csvDownloadRef}
+          target="_blank"
+        /> 
+        <button
+          className="btn btn-primary mb-2"
+          onClick={fetchDataToDownload}
+          style={{ marginLeft: "5px" }}
+        >
+          Discharge Patient Data
+        </button>
+            {/* <button class="btn btn-primary">Discharge Patient Data</button> */}
           </div>
+         
           <div  className="col col-lg-3 mt-2" style={{ backgroundColor:'#317bb8' ,color:'white',marginLeft:'11px',marginRight:'53px',width:'25.5%',height:'30%'}} >
           <p>Patients with rooms :</p>          
           <p>{win.getItem('PatientWithRoomCount')}</p>
@@ -156,23 +218,31 @@ const getPatientRoomData=async()=>{
                   <tr>
                       <th style={{ width: '20%' }}>Sr No:</th>
                       <th style={{ width: '40%' }} >Patient With Rooms</th>
-                      <th style={{ width: '40%' }} >Room</th>
+                      <th style={{ width: '40%' }} >Disease</th>
+                      <th style={{ width: '40%' }} >Score</th>
+                      <th style={{ width: '20%' }} >Room</th>
+                      <th style={{ width: '20%' }} >Discharge</th>
                     
                   </tr>
                   {patientRoomList && resPatientRoomData.map(((patientRoom,index) => {
                       return (
 
                           <tr>
-                              <td style={{ width: '20%' }}>{index+1}</td>
+                              <td style={{ width: '10%' }}>{index+1}</td>
                               <td style={{ width: '40%',textAlign:'center' }} className="diseaseScoreStyle" > {patientRoom.patientName}</td>
+                              <td style={{ width: '50%',textAlign:'center' }} className="diseaseScoreStyle" > {patientRoom.patientDisease}</td>
+                              <td style={{ width: '40%',textAlign:'center' }} className="diseaseScoreStyle" > {patientRoom.patientDiseaseScore}</td>
+                              
                               <td style={{ width: '40%',textAlign:'center' }} className="diseaseScoreStyle" > {patientRoom.roomNumber}</td>
-                             
+                              <td style={{ width: '40%' }} ><input  class="form-check-input" onChange={()=>handlePatientDischarge(patientRoom)} type="checkbox" id="check1" name="option1" value="something"></input></td>
+                         
                           </tr>
                       )
 
                   }))}
               </table>
              
+              <button onClick={dischargeButton} class="btn btn-danger mt-2">Discharge Patient</button>
           </div>
           </div>
           <div className="col col-lg-4">

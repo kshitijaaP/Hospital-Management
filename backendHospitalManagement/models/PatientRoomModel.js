@@ -12,6 +12,12 @@ const PatientRoomSchema=new mongoose.Schema({
     },
     patientId:{
         type:String
+    },
+    patientDiseaseScore:{
+        type:String
+    },
+    patientDisease:{
+        type:String
     }
 
     
